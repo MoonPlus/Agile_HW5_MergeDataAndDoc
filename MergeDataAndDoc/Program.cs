@@ -53,7 +53,8 @@ namespace MergeDataAndDoc
 
 
             using (StreamWriter outFile = new StreamWriter(outputFileName)) // 寫檔案
-                p.outputFile(outFile, TemplateFileName, Var, data);
+            using (StreamReader template = new StreamReader(TemplateFileName)) // 寫檔案
+                p.outputFile(outFile, template, Var, data);
             //p.outputFile(outputFileName, TemplateFileName, Var, data);
               
         }
@@ -97,19 +98,23 @@ namespace MergeDataAndDoc
             }
         }
 
-        public void outputFile(StreamWriter outFile, string template, List<string> Var, List<List<string>> data)
+        public void outputFile(StreamWriter outFile, StreamReader template, List<string> Var, List<List<string>> data)
         {
             string line = "";
+            string tem = template.ReadToEnd();
             for( int k = 0; k < data.Count; k++ ) // 對每一筆資料(中文姓名/身分證/年數)進行替換
             {
-                StreamReader Tfile = new StreamReader(template);
-                while ((line = Tfile.ReadLine()) != null) // 對每一行讀入的template進行替換
+             /*   while ((line = Tfile.ReadLine()) != null) // 對每一行讀入的template進行替換
                 {
                     for( int i = 0; i < Var.Count; i++ )
                         line = line.Replace("${" + Var[i] + "}", data[k][i]);
                     outFile.WriteLine(line);
                 }
-                Tfile.Close();
+                Tfile.Close();*/
+                string write = tem;
+                for( int i = 0; i < Var.Count; i++ )
+                    write = write.Replace("${" + Var[i] + "}", data[k][i]);
+                outFile.Write(write);
             }
         }
 
