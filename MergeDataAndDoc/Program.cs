@@ -72,7 +72,7 @@ namespace MergeDataAndDoc
             }
         }
 
-        public void Get_Data(StreamReader dataFile, List<string> Var, List<List<string>> data)
+        public void Get_Data(TextReader dataFile, List<string> Var, List<List<string>> data)
         {
             string line;
             int count = 0;
