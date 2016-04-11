@@ -10,15 +10,12 @@ namespace MergeDataAndDoc
     class Program
     {
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             string TemplateFileName = "Template.txt";
             string DataFileName = "Data.txt";
             string outputFileName = "Output.txt";
-            
-
-        //    Console.WriteLine( args.Length.ToString() );
-
+     
             if (args.Length == 6)
             {
                 int count = 0;
@@ -51,11 +48,12 @@ namespace MergeDataAndDoc
             using (StreamWriter outFile = new StreamWriter(outputFileName)) // 寫檔案
             using (StreamReader templateFile = new StreamReader(TemplateFileName)) // 讀檔案
             using (StreamReader dataFile = new StreamReader(DataFileName)) // 讀檔案
-                p.Merge(outFile, templateFile, dataFile);
+                Merge(outFile, templateFile, dataFile);
 
               
         }
-        public void Merge(TextWriter outFile, TextReader templateFile, TextReader dataFile)
+
+        public static void Merge(TextWriter outFile, TextReader templateFile, TextReader dataFile)
         {
             string line = "";
             string tem = templateFile.ReadToEnd();
@@ -72,7 +70,7 @@ namespace MergeDataAndDoc
             }
         }
 
-        public void Get_Data(TextReader dataFile, List<string> Var, List<List<string>> data)
+        public static void Get_Data(TextReader dataFile, List<string> Var, List<List<string>> data)
         {
             string line;
             int count = 0;
