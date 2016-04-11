@@ -51,11 +51,11 @@ namespace MergeDataAndDoc
             using (StreamWriter outFile = new StreamWriter(outputFileName)) // 寫檔案
             using (StreamReader templateFile = new StreamReader(TemplateFileName)) // 讀檔案
             using (StreamReader dataFile = new StreamReader(DataFileName)) // 讀檔案
-                p.outputFile(outFile, templateFile, dataFile);
+                p.Merge(outFile, templateFile, dataFile);
 
               
         }
-        public void outputFile(StreamWriter outFile, StreamReader templateFile, StreamReader dataFile)
+        public void Merge(TextWriter outFile, TextReader templateFile, TextReader dataFile)
         {
             string line = "";
             string tem = templateFile.ReadToEnd();
