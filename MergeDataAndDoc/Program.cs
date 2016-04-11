@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+// 4/11 4.00 PM -
 namespace MergeDataAndDoc
 {
     class Program
@@ -49,7 +49,12 @@ namespace MergeDataAndDoc
 
             Program p = new Program();
             p.Get_Data( DataFileName, Var, data );
-            p.outputFile(outputFileName, TemplateFileName, Var, data);
+
+
+
+            using (StreamWriter outFile = new StreamWriter(outputFileName)) // 寫檔案
+                p.outputFile(outFile, TemplateFileName, Var, data);
+            //p.outputFile(outputFileName, TemplateFileName, Var, data);
               
         }
 
@@ -92,22 +97,19 @@ namespace MergeDataAndDoc
             }
         }
 
-        public void outputFile(string outFileName, string template, List<string> Var, List<List<string>> data)
+        public void outputFile(StreamWriter outFile, string template, List<string> Var, List<List<string>> data)
         {
-            using (StreamWriter file = new StreamWriter(outFileName)) // 寫檔案
+            string line = "";
+            for( int k = 0; k < data.Count; k++ ) // 對每一筆資料(中文姓名/身分證/年數)進行替換
             {
-                string line = "";
-                for( int k = 0; k < data.Count; k++ ) // 對每一筆資料(中文姓名/身分證/年數)進行替換
+                StreamReader Tfile = new StreamReader(template);
+                while ((line = Tfile.ReadLine()) != null) // 對每一行讀入的template進行替換
                 {
-                    StreamReader Tfile = new StreamReader(template);
-                    while ((line = Tfile.ReadLine()) != null) // 對每一行讀入的template進行替換
-                    {
-                        for( int i = 0; i < Var.Count; i++ )
-                            line = line.Replace("${" + Var[i] + "}", data[k][i]);
-                        file.WriteLine(line);
-                    }
-                    Tfile.Close();
+                    for( int i = 0; i < Var.Count; i++ )
+                        line = line.Replace("${" + Var[i] + "}", data[k][i]);
+                    outFile.WriteLine(line);
                 }
+                Tfile.Close();
             }
         }
 
